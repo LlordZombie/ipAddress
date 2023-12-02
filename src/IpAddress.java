@@ -2,6 +2,8 @@ import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public class IpAddress {
+    public static final IpAddress LOCALHOST = new IpAddress();
+    public static final IpAddress MODEM = new IpAddress(10, 0, 0, 38);
     private int ip;
 
     public IpAddress() {
@@ -19,13 +21,9 @@ public class IpAddress {
     public IpAddress(int[] ip) {
         set(ip);
     }
-
     public IpAddress(String ip) {
         set(ip);
     }
-
-    public static final IpAddress LOCALHOST = new IpAddress();
-    public static final IpAddress MODEM = new IpAddress(10,0,0,38);
 
     public void set(int[] ip) {
         if (ip.length != 4 || Arrays.stream(ip).anyMatch(octet -> octet < 0 || octet > 255)) {
@@ -68,9 +66,10 @@ public class IpAddress {
 
     public int[] getAsArray() {
         int[] ipArray = new int[4];
+        int temp = ip;
         for (int i = 3; i >= 0; i--) {
-            ipArray[i] = this.ip & 0xFF;  // Extract the least significant octet
-            this.ip >>>= 8;  // Shift right to get the next octet
+            ipArray[i] = temp & 0xFF;  // Extract the least significant octet
+            temp >>>= 8;  // Shift right to get the next octet
         }
 
         return ipArray;
@@ -78,7 +77,11 @@ public class IpAddress {
     }
 
     public int getOctet(int num) {
-        return getAsArray()[num];
+        try {
+        return this.getAsArray()[num];
+    }catch (ArrayIndexOutOfBoundsException e){
+            throw new IllegalArgumentException("Wrong Index");
+        }
     }
 
     public String toString() {
@@ -99,6 +102,4 @@ public class IpAddress {
 
         return ip == ipAddress.ip;
     }
-
-
 }

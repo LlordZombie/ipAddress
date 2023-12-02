@@ -117,21 +117,16 @@ public class Subnet {
 
     public IpAddress[] getAllIps() {
         List<IpAddress> ipList = new ArrayList<>();
-
-        // Get the network address and the last IP address in the range
         IpAddress networkAddress = getNetAddress();
         IpAddress lastIpAddress = getLastIp();
-
         while (Integer.compareUnsigned(networkAddress.getAsInt(), lastIpAddress.getAsInt()) < 0) {
-            ipList.add(new IpAddress(String.valueOf(networkAddress.getAsInt())));  // Add a new instance to avoid modifying the existing one
-
+            ipList.add(new IpAddress(String.valueOf(networkAddress.getAsInt())));
             int currentIpInt = networkAddress.getAsInt() + 1;
             networkAddress.set(currentIpInt);
         }
 
         IpAddress[] ipsArray = new IpAddress[ipList.size()];
         ipList.toArray(ipsArray);
-
         return ipsArray;
     }
 
@@ -144,9 +139,9 @@ public class Subnet {
     public Subnet[] splitNet(int n) {
         Subnet[] newNets = new Subnet[n];
         int newMask = getSuffix() / n;
-        Subnet current = new Subnet(this.getNetAddress(),this.subnetmask);
+        Subnet current = new Subnet(this.getNetAddress(), this.subnetmask);
         for (int i = 0; i < n; i++) {
-            current=current.getNextSubnet();
+            current = current.getNextSubnet();
             newNets[i] = current;
         }
         return newNets;
