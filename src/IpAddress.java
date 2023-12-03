@@ -86,10 +86,10 @@ public class IpAddress {
 
     public String toString() {
         String[] ipArray = new String[4];
-
+        int temp = this.ip;
         for (int i = 3; i >= 0; i--) {
-            ipArray[i] = String.valueOf(this.ip & 0xFF);  // Extract the least significant octet
-            this.ip >>>= 8;  // Shift right to get the next octet
+            ipArray[i] = String.valueOf(temp & 0xFF);  // Extract the least significant octet
+            temp >>>= 8;  // Shift right to get the next octet
         }
 
         return ipArray[0] + "." + ipArray[1] + "." + ipArray[2] + "." + ipArray[3];

@@ -1,16 +1,17 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class Subnet {
-    public static final Subnet LOCALNET = new Subnet(new IpAddress(127, 0, 0, 1), new IpAddress(255, 0, 0, 0));
+    public static final Subnet LOCALNET = new Subnet(new IpAddress(172, 0, 0, 1), new IpAddress(255, 0, 0, 0));
     public static final Subnet PRIVATENET10 = new Subnet(new IpAddress(10, 0, 0, 0), new IpAddress(255, 0, 0, 0));
     private static final IllegalArgumentException invalidSubnet = new IllegalArgumentException("Invalid Subnet");
     private IpAddress ip;
     private IpAddress subnetmask;
 
     public Subnet(String subnet) {
-        String[] split = subnet.split("\\.");
+        String[] split = subnet.split(Pattern.quote("/"));
         set(split);
     }
 
@@ -32,7 +33,7 @@ public class Subnet {
     public Subnet(IpAddress ip) {
         String[] subnet = new String[2];
         subnet[0] = ip.toString();
-        int netClass = '@' - getClass(ip);
+        int netClass = getClass(ip) - 'A';
         IpAddress[] a = {new IpAddress(255, 0, 0, 0), new IpAddress(255, 255, 0, 0), new IpAddress(255, 255, 255, 0)};
         try {
             subnet[1] = a[netClass].toString();
@@ -73,15 +74,23 @@ public class Subnet {
     }
 
     public int getNumberOfHosts() {
-        return ~this.subnetmask.getAsInt();
+        return ~this.subnetmask.getAsInt() - 1;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Subnet subnet = (Subnet) o;
-        return Objects.equals(ip, subnet.ip) && Objects.equals(subnetmask, subnet.subnetmask);
+
+        if (!Objects.equals(ip, subnet.ip)) return false;
+        return Objects.equals(subnetmask, subnet.subnetmask);
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 
     @Override
@@ -98,14 +107,14 @@ public class Subnet {
 
     public IpAddress getBroadcastAddress() {
         IpAddress a = new IpAddress();
-        int addr = this.ip.getAsInt() + (~this.subnetmask.getAsInt());
+        int addr = this.getNetAddress().getAsInt() + (~this.subnetmask.getAsInt());
         a.set(addr);
         return a;
     }
 
     public IpAddress getFirstIp() {
         IpAddress a = new IpAddress();
-        a.set(this.getNetMask().getAsInt() + 1);
+        a.set(this.getNetAddress().getAsInt() + 1);
         return a;
     }
 
@@ -115,12 +124,12 @@ public class Subnet {
         return a;
     }
 
-    public IpAddress[] getAllIps() {
+    public IpAddress[] getAllIpsInNetwork() {
         List<IpAddress> ipList = new ArrayList<>();
         IpAddress networkAddress = getNetAddress();
         IpAddress lastIpAddress = getLastIp();
-        while (Integer.compareUnsigned(networkAddress.getAsInt(), lastIpAddress.getAsInt()) < 0) {
-            ipList.add(new IpAddress(String.valueOf(networkAddress.getAsInt())));
+        while (Integer.compareUnsigned(networkAddress.getAsInt(), lastIpAddress.getAsInt()) != 0) {
+            ipList.add(new IpAddress(networkAddress.toString()));
             int currentIpInt = networkAddress.getAsInt() + 1;
             networkAddress.set(currentIpInt);
         }
@@ -132,19 +141,25 @@ public class Subnet {
 
     public Subnet getNextSubnet() {
         IpAddress a = getNetAddress();
-        a.set(a.getAsInt() + (~subnetmask.getAsInt()));
+
+        a.set(this.getBroadcastAddress().getAsInt() + 1);
         return new Subnet(a, this.subnetmask);
     }
 
     public Subnet[] splitNet(int n) {
         Subnet[] newNets = new Subnet[n];
-        int newMask = getSuffix() / n;
-        Subnet current = new Subnet(this.getNetAddress(), this.subnetmask);
+        int newMask = 32 - (int) Math.ceil(Math.log((double) getHostNum() / 2) / Math.log(2));
+        Subnet current = new Subnet(this.getNetAddress(), newMask);
         for (int i = 0; i < n; i++) {
-            current = current.getNextSubnet();
+
             newNets[i] = current;
+            current = current.getNextSubnet();
         }
         return newNets;
+    }
+
+    private int getHostNum() {
+        return (int) Math.pow(2, 32 - getSuffix());
     }
 
     private int getSuffix() {
@@ -190,5 +205,6 @@ public class Subnet {
         this.ip = addr;
         this.subnetmask = mask;
     }
+
 
 }
