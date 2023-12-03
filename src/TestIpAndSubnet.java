@@ -105,24 +105,26 @@ public class TestIpAndSubnet {
         assertEquals(first.toString(), "192.168.0.1");
         assertEquals(last.toString(), "192.168.0.254");
         assertEquals(Arrays.toString(all), "[192.168.0.4, 192.168.0.5]");
-        assertEquals(num,254);
-        assertEquals(Arrays.toString(split),"[192.168.0.0/255.255.255.128, 192.168.0.128/255.255.255.128]");
-        assertTrue(a.equals(c));
-        assertFalse(a.equals(b));
-        assertEquals(Subnet.LOCALNET,new Subnet("172.0.0.1/8"));
-        assertEquals(Subnet.PRIVATENET10,new Subnet("10.0.0.0/8"));
+        assertEquals(num, 254);
+        assertEquals(Arrays.toString(split), "[192.168.0.0/255.255.255.128, 192.168.0.128/255.255.255.128]");
+        assertEquals(a, c);
+        assertNotEquals(a, b);
+        assertEquals(Subnet.LOCALNET, new Subnet("172.0.0.1/8"));
+        assertEquals(Subnet.PRIVATENET10, new Subnet("10.0.0.0/8"));
+        assertTrue(a.isInNetwork(new IpAddress("192.168.0.5")));
+        assertFalse(a.isInNetwork(new IpAddress("193.168.0.1")));
     }
 
     @Test
-    void subnetSpecialCasesTests(){
-        assertThrows(IllegalArgumentException.class,()->new Subnet(""));
-        assertThrows(IllegalArgumentException.class,()->new Subnet("1233.123.123.123/24"));
-        assertThrows(IllegalArgumentException.class,()->new Subnet("1234.123.23.23","24"));
-        assertThrows(IllegalArgumentException.class,()->new Subnet(new IpAddress(254,254,254,254)));
-        assertThrows(IllegalArgumentException.class,()->new Subnet("10.0.0.0/123.123.123.123"));
-        assertThrows(IllegalArgumentException.class,()->new Subnet("10.0.0.0/33"));
-        assertThrows(IllegalArgumentException.class,()->new Subnet(new IpAddress(10,0,0,0),33));
-        assertThrows(IllegalArgumentException.class,()->new Subnet(new IpAddress(10,0,0,0),new IpAddress(123,123,123,123)));
+    void subnetSpecialCasesTests() {
+        assertThrows(IllegalArgumentException.class, () -> new Subnet(""));
+        assertThrows(IllegalArgumentException.class, () -> new Subnet("1233.123.123.123/24"));
+        assertThrows(IllegalArgumentException.class, () -> new Subnet("1234.123.23.23", "24"));
+        assertThrows(IllegalArgumentException.class, () -> new Subnet(new IpAddress(254, 254, 254, 254)));
+        assertThrows(IllegalArgumentException.class, () -> new Subnet("10.0.0.0/123.123.123.123"));
+        assertThrows(IllegalArgumentException.class, () -> new Subnet("10.0.0.0/33"));
+        assertThrows(IllegalArgumentException.class, () -> new Subnet(new IpAddress(10, 0, 0, 0), 33));
+        assertThrows(IllegalArgumentException.class, () -> new Subnet(new IpAddress(10, 0, 0, 0), new IpAddress(123, 123, 123, 123)));
     }
 
 }

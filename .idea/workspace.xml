@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f5406d54-14d0-455f-8259-f1c051160a20" name="Changes" comment="ich hasse testfälle immer noch">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IpAddress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IpAddress.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Subnet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Subnet.java" afterDir="false" />
+    <list default="true" id="f5406d54-14d0-455f-8259-f1c051160a20" name="Changes" comment="fertig">
       <change beforePath="$PROJECT_DIR$/src/TestIpAndSubnet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestIpAndSubnet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -85,7 +82,7 @@
       <workItem from="1701527497902" duration="6561000" />
       <workItem from="1701538719325" duration="15304000" />
       <workItem from="1701557978153" duration="8000" />
-      <workItem from="1701617125508" duration="4368000" />
+      <workItem from="1701617125508" duration="4938000" />
     </task>
     <task id="LOCAL-00001" summary="schon wieder ip :,(">
       <option name="closed" value="true" />
@@ -111,7 +108,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701553592930</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fertig">
+      <option name="closed" value="true" />
+      <created>1701622156842</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1701622156842</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -121,6 +126,7 @@
     <MESSAGE value="schon wieder ip :,(" />
     <MESSAGE value="ich hasse testfälle" />
     <MESSAGE value="ich hasse testfälle immer noch" />
-    <option name="LAST_COMMIT_MESSAGE" value="ich hasse testfälle immer noch" />
+    <MESSAGE value="fertig" />
+    <option name="LAST_COMMIT_MESSAGE" value="fertig" />
   </component>
 </project>
