@@ -21,6 +21,7 @@ public class IpAddress {
     public IpAddress(int[] ip) {
         set(ip);
     }
+
     public IpAddress(String ip) {
         set(ip);
     }
@@ -78,8 +79,8 @@ public class IpAddress {
 
     public int getOctet(int num) {
         try {
-        return this.getAsArray()[num];
-    }catch (ArrayIndexOutOfBoundsException e){
+            return this.getAsArray()[num];
+        } catch (ArrayIndexOutOfBoundsException e) {
             throw new IllegalArgumentException("Wrong Index");
         }
     }
