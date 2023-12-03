@@ -133,7 +133,6 @@ public class Subnet {
             int currentIpInt = networkAddress.getAsInt() + 1;
             networkAddress.set(currentIpInt);
         }
-
         IpAddress[] ipsArray = new IpAddress[ipList.size()];
         ipList.toArray(ipsArray);
         return ipsArray;
@@ -141,7 +140,6 @@ public class Subnet {
 
     public Subnet getNextSubnet() {
         IpAddress a = getNetAddress();
-
         a.set(this.getBroadcastAddress().getAsInt() + 1);
         return new Subnet(a, this.subnetmask);
     }
@@ -151,7 +149,6 @@ public class Subnet {
         int newMask = 32 - (int) Math.ceil(Math.log((double) getHostNum() / 2) / Math.log(2));
         Subnet current = new Subnet(this.getNetAddress(), newMask);
         for (int i = 0; i < n; i++) {
-
             newNets[i] = current;
             current = current.getNextSubnet();
         }
@@ -164,13 +161,11 @@ public class Subnet {
 
     private int getSuffix() {
         try {
-
             int maskInt = this.subnetmask.getAsInt();
             int suffix = 0;
             while (((maskInt << suffix) & 0x80000000) != 0) {
                 suffix++;
             }
-
             return suffix;
         } catch (IllegalArgumentException e) {
             throw invalidSubnet;
@@ -180,7 +175,6 @@ public class Subnet {
     private void set(String[] subnet) {
         IpAddress addr = new IpAddress(subnet[0]);
         IpAddress mask = new IpAddress();
-
         if (subnet[1].contains(".")) {
             try {
                 mask = new IpAddress(subnet[1]);
@@ -205,6 +199,4 @@ public class Subnet {
         this.ip = addr;
         this.subnetmask = mask;
     }
-
-
 }

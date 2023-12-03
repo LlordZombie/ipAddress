@@ -37,7 +37,6 @@ public class IpAddress {
 
     public void set(String ip) {
         String[] parts = ip.split("\\.");
-
         if (parts.length != 4 || Arrays.stream(parts).anyMatch(part -> {
             try {
                 int octet = Integer.parseInt(part);
@@ -69,12 +68,10 @@ public class IpAddress {
         int[] ipArray = new int[4];
         int temp = ip;
         for (int i = 3; i >= 0; i--) {
-            ipArray[i] = temp & 0xFF;  // Extract the least significant octet
-            temp >>>= 8;  // Shift right to get the next octet
+            ipArray[i] = temp & 0xFF;
+            temp >>>= 8;
         }
-
         return ipArray;
-
     }
 
     public int getOctet(int num) {
@@ -89,10 +86,9 @@ public class IpAddress {
         String[] ipArray = new String[4];
         int temp = this.ip;
         for (int i = 3; i >= 0; i--) {
-            ipArray[i] = String.valueOf(temp & 0xFF);  // Extract the least significant octet
-            temp >>>= 8;  // Shift right to get the next octet
+            ipArray[i] = String.valueOf(temp & 0xFF);
+            temp >>>= 8;
         }
-
         return ipArray[0] + "." + ipArray[1] + "." + ipArray[2] + "." + ipArray[3];
     }
 
@@ -100,7 +96,6 @@ public class IpAddress {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof IpAddress ipAddress)) return false;
-
         return ip == ipAddress.ip;
     }
 }

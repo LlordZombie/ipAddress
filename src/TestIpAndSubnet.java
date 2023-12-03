@@ -1,7 +1,5 @@
 import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestIpAndSubnet {
@@ -126,5 +124,4 @@ public class TestIpAndSubnet {
         assertThrows(IllegalArgumentException.class, () -> new Subnet(new IpAddress(10, 0, 0, 0), 33));
         assertThrows(IllegalArgumentException.class, () -> new Subnet(new IpAddress(10, 0, 0, 0), new IpAddress(123, 123, 123, 123)));
     }
-
 }
