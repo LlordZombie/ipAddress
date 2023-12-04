@@ -87,6 +87,8 @@ public class TestIpAndSubnet {
         Subnet a = new Subnet("192.168.0.4/255.255.255.0");
         Subnet b = new Subnet("192.168.0.4/255.255.255.252");
         Subnet c = new Subnet("192.168.0.4/255.255.255.0");
+        Subnet d = new Subnet("192.167.0.1/255.255.255.0");
+        Subnet e = new Subnet("192.169.0.1/255.255.255.0");
         IpAddress nm = a.getNetMask();
         IpAddress na = a.getNetAddress();
         IpAddress bc = a.getBroadcastAddress();
@@ -111,6 +113,9 @@ public class TestIpAndSubnet {
         assertEquals(Subnet.PRIVATENET10, new Subnet("10.0.0.0/8"));
         assertTrue(a.isInNetwork(new IpAddress("192.168.0.5")));
         assertFalse(a.isInNetwork(new IpAddress("193.168.0.1")));
+        assertTrue(a.compareTo(d)>0);
+        assertTrue(a.compareTo(e)<0);
+        assertTrue(a.compareTo(a)==0);
     }
 
     @Test

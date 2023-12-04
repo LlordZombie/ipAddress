@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class Subnet {
+public class Subnet implements Comparable<Subnet>{
     public static final Subnet LOCALNET = new Subnet(new IpAddress(172, 0, 0, 1), new IpAddress(255, 0, 0, 0));
     public static final Subnet PRIVATENET10 = new Subnet(new IpAddress(10, 0, 0, 0), new IpAddress(255, 0, 0, 0));
     private static final IllegalArgumentException invalidSubnet = new IllegalArgumentException("Invalid Subnet");
@@ -198,5 +198,10 @@ public class Subnet {
         }
         this.ip = addr;
         this.subnetmask = mask;
+    }
+
+    @Override
+    public int compareTo(Subnet o) {
+        return this.getNetAddress().compareTo(o.getNetAddress());
     }
 }

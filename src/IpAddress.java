@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
-public class IpAddress {
+public class IpAddress implements Comparable<IpAddress> {
     public static final IpAddress LOCALHOST = new IpAddress();
     public static final IpAddress MODEM = new IpAddress(10, 0, 0, 38);
     private int ip;
@@ -97,5 +97,10 @@ public class IpAddress {
         if (this == o) return true;
         if (!(o instanceof IpAddress ipAddress)) return false;
         return ip == ipAddress.ip;
+    }
+
+    @Override
+    public int compareTo(IpAddress o) {
+        return Integer.compareUnsigned(this.getAsInt(), o.getAsInt());
     }
 }
