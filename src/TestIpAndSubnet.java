@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
+import java.util.stream.IntStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestIpAndSubnet {
@@ -115,7 +117,7 @@ public class TestIpAndSubnet {
         assertFalse(a.isInNetwork(new IpAddress("193.168.0.1")));
         assertTrue(a.compareTo(d)>0);
         assertTrue(a.compareTo(e)<0);
-        assertTrue(a.compareTo(a)==0);
+        assertEquals(0, a.compareTo(a));
     }
 
     @Test
@@ -129,4 +131,6 @@ public class TestIpAndSubnet {
         assertThrows(IllegalArgumentException.class, () -> new Subnet(new IpAddress(10, 0, 0, 0), 33));
         assertThrows(IllegalArgumentException.class, () -> new Subnet(new IpAddress(10, 0, 0, 0), new IpAddress(123, 123, 123, 123)));
     }
+
+
 }

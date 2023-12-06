@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class Subnet implements Comparable<Subnet>{
+public class Subnet implements Comparable<Subnet> {
     public static final Subnet LOCALNET = new Subnet(new IpAddress(172, 0, 0, 1), new IpAddress(255, 0, 0, 0));
     public static final Subnet PRIVATENET10 = new Subnet(new IpAddress(10, 0, 0, 0), new IpAddress(255, 0, 0, 0));
     private static final IllegalArgumentException invalidSubnet = new IllegalArgumentException("Invalid Subnet");
@@ -44,10 +44,10 @@ public class Subnet implements Comparable<Subnet>{
     }
 
     private static boolean isValidSnm(IpAddress addr) {
-        IpAddress compareTo = new IpAddress();
+        IpAddress compareValue = new IpAddress();
         for (int i = 0; i < 32; i++) {
-            compareTo.set(~0 << (32 - i));
-            if (addr.equals(compareTo)) {
+            compareValue.set(~0 << (32 - i));
+            if (addr.equals(compareValue)) {
                 return true;
             }
         }
@@ -175,26 +175,30 @@ public class Subnet implements Comparable<Subnet>{
     private void set(String[] subnet) {
         IpAddress addr = new IpAddress(subnet[0]);
         IpAddress mask = new IpAddress();
-        if (subnet[1].contains(".")) {
-            try {
-                mask = new IpAddress(subnet[1]);
-                if (!isValidSnm(mask)) {
+        try {
+            if (subnet[1].contains(".")) {
+                try {
+                    mask = new IpAddress(subnet[1]);
+                    if (!isValidSnm(mask)) {
+                        throw invalidSubnet;
+                    }
+                } catch (IllegalArgumentException e) {
                     throw invalidSubnet;
                 }
-            } catch (IllegalArgumentException e) {
-                throw invalidSubnet;
+            } else {
+                int suffix;
+                try {
+                    suffix = Integer.parseInt(subnet[1]);
+                } catch (NumberFormatException e) {
+                    throw invalidSubnet;
+                }
+                if (suffix < 0 || suffix > 32) {
+                    throw invalidSubnet;
+                }
+                mask.set(~0 << (32 - suffix));
             }
-        } else {
-            int suffix;
-            try {
-                suffix = Integer.parseInt(subnet[1]);
-            } catch (NumberFormatException e) {
-                throw invalidSubnet;
-            }
-            if (suffix < 0 || suffix > 32) {
-                throw invalidSubnet;
-            }
-            mask.set(~0 << (32 - suffix));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw invalidSubnet;
         }
         this.ip = addr;
         this.subnetmask = mask;

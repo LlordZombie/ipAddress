@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f5406d54-14d0-455f-8259-f1c051160a20" name="Changes" comment="fertig">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="f5406d54-14d0-455f-8259-f1c051160a20" name="Changes" comment="brav auch compareto gemacht">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ipAddress.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ipAddress.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IpAddress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IpAddress.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Subnet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Subnet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TestIpAndSubnet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TestIpAndSubnet.java" afterDir="false" />
     </list>
@@ -27,12 +24,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "LlordZombie"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;LlordZombie&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -79,7 +76,14 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.Unnamed">
+    <configuration name="TestIpAndSubnet" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TestIpAndSubnet" />
+      <module name="ipAddress" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Unnamed" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
       <module name="ipAddress" />
       <option name="PACKAGE_NAME" value="" />
@@ -90,6 +94,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.TestIpAndSubnet" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -106,7 +115,8 @@
       <workItem from="1701557978153" duration="8000" />
       <workItem from="1701617125508" duration="4997000" />
       <workItem from="1701627474593" duration="885000" />
-      <workItem from="1701678737347" duration="634000" />
+      <workItem from="1701678737347" duration="965000" />
+      <workItem from="1701689928957" duration="3425000" />
     </task>
     <task id="LOCAL-00001" summary="schon wieder ip :,(">
       <option name="closed" value="true" />
@@ -156,7 +166,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701627599089</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="brav auch compareto gemacht">
+      <option name="closed" value="true" />
+      <created>1701680603794</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1701680603794</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,6 +185,7 @@
     <MESSAGE value="ich hasse testfälle" />
     <MESSAGE value="ich hasse testfälle immer noch" />
     <MESSAGE value="fertig" />
-    <option name="LAST_COMMIT_MESSAGE" value="fertig" />
+    <MESSAGE value="brav auch compareto gemacht" />
+    <option name="LAST_COMMIT_MESSAGE" value="brav auch compareto gemacht" />
   </component>
 </project>
