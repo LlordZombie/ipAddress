@@ -3,7 +3,7 @@ import java.util.stream.IntStream;
 
 public class IpAddress implements Comparable<IpAddress> {
     public static final IpAddress LOCALHOST = new IpAddress();
-    public static final IpAddress MODEM = new IpAddress(10, 0, 0, 38);
+    public static final IpAddress MODEM = new IpAddress(10, 0, 0, 138);
     private int ip;
 
     public IpAddress() {
@@ -83,12 +83,7 @@ public class IpAddress implements Comparable<IpAddress> {
     }
 
     public String toString() {
-        String[] ipArray = new String[4];
-        int temp = this.ip;
-        for (int i = 3; i >= 0; i--) {
-            ipArray[i] = String.valueOf(temp & 0xFF);
-            temp >>>= 8;
-        }
+        int[] ipArray = getAsArray();
         return ipArray[0] + "." + ipArray[1] + "." + ipArray[2] + "." + ipArray[3];
     }
 

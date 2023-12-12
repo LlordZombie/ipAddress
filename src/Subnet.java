@@ -7,33 +7,33 @@ public class Subnet implements Comparable<Subnet> {
     public static final Subnet LOCALNET = new Subnet(new IpAddress(172, 0, 0, 1), new IpAddress(255, 0, 0, 0));
     public static final Subnet PRIVATENET10 = new Subnet(new IpAddress(10, 0, 0, 0), new IpAddress(255, 0, 0, 0));
     private static final IllegalArgumentException invalidSubnet = new IllegalArgumentException("Invalid Subnet");
-    private IpAddress ip;
-    private IpAddress subnetmask;
+    private IpAddress addr;
+    private IpAddress mask;
 
     public Subnet(String subnet) {
         String[] split = subnet.split(Pattern.quote("/"));
         set(split);
     }
 
-    public Subnet(IpAddress ip, int suffix) {
-        String[] subnet = {ip.toString(), String.valueOf(suffix)};
+    public Subnet(IpAddress addr, int suffix) {
+        String[] subnet = {addr.toString(), String.valueOf(suffix)};
         set(subnet);
     }
 
-    public Subnet(IpAddress ip, IpAddress subnetmask) {
-        String[] subnet = {ip.toString(), subnetmask.toString()};
+    public Subnet(IpAddress addr, IpAddress mask) {
+        String[] subnet = {addr.toString(), mask.toString()};
         set(subnet);
     }
 
-    public Subnet(String ip, String subnetmask) {
-        String[] subnet = {ip, subnetmask};
+    public Subnet(String addr, String mask) {
+        String[] subnet = {addr, mask};
         set(subnet);
     }
 
-    public Subnet(IpAddress ip) {
+    public Subnet(IpAddress addr) {
         String[] subnet = new String[2];
-        subnet[0] = ip.toString();
-        int netClass = getClass(ip) - 'A';
+        subnet[0] = addr.toString();
+        int netClass = getClass(addr) - 'A';
         IpAddress[] a = {new IpAddress(255, 0, 0, 0), new IpAddress(255, 255, 0, 0), new IpAddress(255, 255, 255, 0)};
         try {
             subnet[1] = a[netClass].toString();
@@ -64,17 +64,17 @@ public class Subnet implements Comparable<Subnet> {
     }
 
     public IpAddress getNetMask() {
-        return subnetmask;
+        return mask;
     }
 
     public IpAddress getNetAddress() {
         IpAddress a = new IpAddress();
-        a.set(this.ip.getAsInt() & this.subnetmask.getAsInt());
+        a.set(this.addr.getAsInt() & this.mask.getAsInt());
         return a;
     }
 
     public int getNumberOfHosts() {
-        return ~this.subnetmask.getAsInt() - 1;
+        return ~this.mask.getAsInt() - 1;
     }
 
     @Override
@@ -84,8 +84,8 @@ public class Subnet implements Comparable<Subnet> {
 
         Subnet subnet = (Subnet) o;
 
-        if (!Objects.equals(ip, subnet.ip)) return false;
-        return Objects.equals(subnetmask, subnet.subnetmask);
+        if (!Objects.equals(addr, subnet.addr)) return false;
+        return Objects.equals(mask, subnet.mask);
     }
 
     @Override
@@ -95,19 +95,19 @@ public class Subnet implements Comparable<Subnet> {
 
     @Override
     public String toString() {
-        return ip.toString() + "/" + subnetmask.toString();
+        return addr.toString() + "/" + mask.toString();
     }
 
     public boolean isInNetwork(IpAddress ip) {
-        Subnet net1 = new Subnet(this.getNetAddress(), this.subnetmask);
-        Subnet net2 = new Subnet(ip, this.subnetmask);
-        Subnet net3 = new Subnet(net2.getNetAddress(), this.subnetmask);
+        Subnet net1 = new Subnet(this.getNetAddress(), this.mask);
+        Subnet net2 = new Subnet(ip, this.mask);
+        Subnet net3 = new Subnet(net2.getNetAddress(), this.mask);
         return net1.equals(net3);
     }
 
     public IpAddress getBroadcastAddress() {
         IpAddress a = new IpAddress();
-        int addr = this.getNetAddress().getAsInt() + (~this.subnetmask.getAsInt());
+        int addr = this.getNetAddress().getAsInt() + (~this.mask.getAsInt());
         a.set(addr);
         return a;
     }
@@ -141,7 +141,7 @@ public class Subnet implements Comparable<Subnet> {
     public Subnet getNextSubnet() {
         IpAddress a = getNetAddress();
         a.set(this.getBroadcastAddress().getAsInt() + 1);
-        return new Subnet(a, this.subnetmask);
+        return new Subnet(a, this.mask);
     }
 
     public Subnet[] splitNet(int n) {
@@ -161,7 +161,7 @@ public class Subnet implements Comparable<Subnet> {
 
     private int getSuffix() {
         try {
-            int maskInt = this.subnetmask.getAsInt();
+            int maskInt = this.mask.getAsInt();
             int suffix = 0;
             while (((maskInt << suffix) & 0x80000000) != 0) {
                 suffix++;
@@ -200,8 +200,8 @@ public class Subnet implements Comparable<Subnet> {
         } catch (ArrayIndexOutOfBoundsException e) {
             throw invalidSubnet;
         }
-        this.ip = addr;
-        this.subnetmask = mask;
+        this.addr = addr;
+        this.mask = mask;
     }
 
     @Override
