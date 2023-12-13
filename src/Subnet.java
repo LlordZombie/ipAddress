@@ -253,40 +253,12 @@ public class Subnet implements Comparable<Subnet> {
      */
     public Subnet[] splitNet(int n) {
         Subnet[] newNets = new Subnet[n];
-        int newMask = 32 - (int) Math.ceil(Math.log(getHostNum() / 2.0) / Math.log(2));
+        int newMask = 32 - (int) Math.ceil(Math.log((double) getNumberOfHosts() / n) / Math.log(n));
         Subnet current = new Subnet(getNetAddress(), newMask);
         for (int i = 0; i < n; i++, current = current.getNextSubnet()) {
             newNets[i] = current;
         }
         return newNets;
-    }
-
-    /**
-     * Calculates the number of hosts that can be accommodated in the subnet.
-     *
-     * @return The number of hosts.
-     */
-    private int getHostNum() {
-        return (int) Math.pow(2, 32 - getSuffix());
-    }
-
-    /**
-     * Calculates the suffix length of the subnet mask.
-     *
-     * @return The suffix length.
-     * @throws IllegalArgumentException If the subnet mask is invalid.
-     */
-    private int getSuffix() {
-        try {
-            int maskInt = this.mask.getAsInt();
-            int suffix = 0;
-            while (((maskInt << suffix) & 0x80000000) != 0) {
-                suffix++;
-            }
-            return suffix;
-        } catch (IllegalArgumentException e) {
-            throw invalidSubnet;
-        }
     }
 
     /**
