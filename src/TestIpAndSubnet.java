@@ -1,10 +1,16 @@
 import org.junit.jupiter.api.Test;
+
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * JUnit test class for the IpAddress and Subnet classes.
+ */
 public class TestIpAndSubnet {
+    /**
+     * Tests various constructors of the IpAddress class.
+     */
     @Test
     void ipConstructorTests() {
         IpAddress defaultC = new IpAddress();
@@ -17,6 +23,9 @@ public class TestIpAndSubnet {
         assertEquals(stringC.toString(), "192.168.0.1");
     }
 
+    /**
+     * Tests the set methods of the IpAddress class.
+     */
     @Test
     void ipSetterTests() {
         IpAddress a = new IpAddress();
@@ -34,6 +43,9 @@ public class TestIpAndSubnet {
         assertEquals(a, compare4);
     }
 
+    /**
+     * Tests the get methods of the IpAddress class.
+     */
     @Test
     void ipGetterTests() {
         IpAddress a = new IpAddress("192.168.0.1");
@@ -42,10 +54,13 @@ public class TestIpAndSubnet {
         assertArrayEquals(a.getAsArray(), new int[]{192, 168, 0, 1});
     }
 
+    /**
+     * Tests constants and equality checks of the IpAddress class.
+     */
     @Test
     void ipConstantsAndEquals() {
         assertEquals(IpAddress.LOCALHOST, new IpAddress("127.0.0.1"));
-        assertEquals(IpAddress.MODEM, new IpAddress("10.0.0.38"));
+        assertEquals(IpAddress.MODEM, new IpAddress("10.0.0.138"));
         IpAddress a = new IpAddress("192.168.0.1");
         IpAddress b = new IpAddress(192, 168, 0, 1);
         IpAddress c = new IpAddress(192, 123, 123, 123);
@@ -53,6 +68,9 @@ public class TestIpAndSubnet {
         assertNotEquals(a, c);
     }
 
+    /**
+     * Tests special cases and error handling of the IpAddress class.
+     */
     @Test
     void ipSpecialCasesTests() {
         assertThrows(IllegalArgumentException.class, () -> new IpAddress("asdf"));
@@ -64,6 +82,9 @@ public class TestIpAndSubnet {
         assertThrows(IllegalArgumentException.class, () -> new IpAddress("1.1.1.1").getOctet(5));
     }
 
+    /**
+     * Tests various constructors of the Subnet class.
+     */
     @Test
     void subnetConstructorTests() {
         Subnet stringCidrC = new Subnet("192.168.1.0/24");
@@ -84,6 +105,9 @@ public class TestIpAndSubnet {
         assertEquals(classCC.toString(), "200.0.0.1/255.255.255.0");
     }
 
+    /**
+     * Tests various methods of the Subnet class.
+     */
     @Test
     void subnetMethodTests() {
         Subnet a = new Subnet("192.168.0.4/255.255.255.0");
@@ -111,15 +135,18 @@ public class TestIpAndSubnet {
         assertEquals(Arrays.toString(split), "[192.168.0.0/255.255.255.128, 192.168.0.128/255.255.255.128]");
         assertEquals(a, c);
         assertNotEquals(a, b);
-        assertEquals(Subnet.LOCALNET, new Subnet("172.0.0.1/8"));
+        assertEquals(Subnet.LOCALNET, new Subnet("127.0.0.1/8"));
         assertEquals(Subnet.PRIVATENET10, new Subnet("10.0.0.0/8"));
         assertTrue(a.isInNetwork(new IpAddress("192.168.0.5")));
         assertFalse(a.isInNetwork(new IpAddress("193.168.0.1")));
-        assertTrue(a.compareTo(d)>0);
-        assertTrue(a.compareTo(e)<0);
+        assertTrue(a.compareTo(d) > 0);
+        assertTrue(a.compareTo(e) < 0);
         assertEquals(0, a.compareTo(a));
     }
 
+    /**
+     * Tests special cases and error handling of the Subnet class.
+     */
     @Test
     void subnetSpecialCasesTests() {
         assertThrows(IllegalArgumentException.class, () -> new Subnet(""));
